@@ -10,21 +10,30 @@
       <add-payment-form v-show="addForm" @addNewPayment="addData" />
     </div>
     <div :class="[$style.content]">
-      <payments-display :list="paymentsList" />
+      <payments-display :list="pageElements" />
+      <pagination
+        :page="pages"
+        :n="n"
+        :length="paymentsList.length"
+        @changePage="addChengePages"
+      />
     </div>
   </div>
 </template>
 
 <script>
 import AddPaymentForm from "./components/AddPaymentForm.vue";
+import Pagination from "./components/Pagination.vue";
 import PaymentsDisplay from "./components/PaymentsDisplay.vue";
 export default {
   name: "App",
-  components: { PaymentsDisplay, AddPaymentForm },
+  components: { PaymentsDisplay, AddPaymentForm, Pagination },
   data() {
     return {
       paymentsList: [],
       addForm: "",
+      pages: 1,
+      n: 5,
     };
   },
   methods: {
@@ -37,6 +46,9 @@ export default {
     },
     addData(newPayment) {
       this.paymentsList.push(newPayment);
+    },
+    addChengePages(p) {
+      this.pages = p;
     },
     fetchData() {
       return [
@@ -56,6 +68,12 @@ export default {
           value: 532,
         },
       ];
+    },
+  },
+  computed: {
+    pageElements() {
+      const { n, pages } = this;
+      return this.paymentsList.slice(n * (pages - 1), n * (pages - 1) + n);
     },
   },
   created() {
