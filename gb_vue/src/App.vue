@@ -11,6 +11,7 @@
     </div>
     <div :class="[$style.content]">
       <payments-display :list="pageElements" />
+      Total Value: {{ getFPV }}
       <pagination
         :page="pages"
         :n="n"
@@ -22,6 +23,7 @@
 </template>
 
 <script>
+import { mapMutations, mapGetters, mapActions } from "vuex";
 import AddPaymentForm from "./components/AddPaymentForm.vue";
 import Pagination from "./components/Pagination.vue";
 import PaymentsDisplay from "./components/PaymentsDisplay.vue";
@@ -30,13 +32,21 @@ export default {
   components: { PaymentsDisplay, AddPaymentForm, Pagination },
   data() {
     return {
-      paymentsList: [],
+      // paymentsList: [], // без store
       addForm: "",
       pages: 1,
       n: 5,
     };
   },
   methods: {
+    ...mapMutations({
+      loadData: "setPaymentListData",
+      addDataToStore: "addDataToPaymentList",
+      // *** loadData - кастомное название мутации
+    }),
+    ...mapActions({
+      fetchListData: "fetchData",
+    }),
     onForm() {
       if (this.addForm == false) {
         this.addForm = true;
@@ -45,7 +55,8 @@ export default {
       }
     },
     addData(newPayment) {
-      this.paymentsList.push(newPayment);
+      // this.paymentsList.push(newPayment);
+      this.addDataToStore(newPayment);
     },
     addChengePages(p) {
       this.pages = p;
@@ -71,13 +82,28 @@ export default {
     },
   },
   computed: {
+    ...mapGetters({
+      paymentsList: "getPaymentsList",
+    }),
     pageElements() {
       const { n, pages } = this;
       return this.paymentsList.slice(n * (pages - 1), n * (pages - 1) + n);
     },
+    getFPV() {
+      return this.$store.getters.getFullPaymentValue;
+    },
   },
   created() {
-    this.paymentsList = this.fetchData();
+    // *** без store
+    // this.paymentsList = this.fetchData();
+    // *** вызов мктации
+    // this.$store.commit("setPaymentListData", this.fetchData());
+    // *** вызов мутации через mapMutations
+    // this.loadData(this.fetchData());
+    // *** Вызываем actions
+    // this.$store.dispatch("fetchData");
+    // или
+    this.fetchListData();
   },
 };
 </script>

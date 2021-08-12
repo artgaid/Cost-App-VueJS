@@ -7,7 +7,7 @@
       <span class="list_title"><b>Value</b></span>
     </div>
     <div class="items" v-for="(item, idx) in list" :key="idx">
-      <span>{{ idx + 1 }}</span>
+      <span>{{ item.id }}</span>
       <span>{{ item.date }}</span>
       <span>{{ item.category }}</span>
       <span>{{ item.value }}</span>
