@@ -33,6 +33,7 @@ export default {
   data() {
     return {
       // paymentsList: [], // без store
+      category: "",
       addForm: "",
       pages: 1,
       n: 5,

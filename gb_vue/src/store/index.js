@@ -22,6 +22,9 @@ export default new Vuex.Store({
         },
         setCategoriesListData(state, payload) {
             state.categories = payload
+        },
+        addCategoryToList(state, payload) {
+            state.categories.push(payload)
         }
     },
     getters: {
@@ -57,7 +60,7 @@ export default new Vuex.Store({
                 setTimeout(() => {
                     const categories = ['Sport', 'Food', 'IT', 'Internet', 'Other']
                     resolve(categories)
-                }, 2000)
+                }, 1000)
             })
                 .then(res => commit('setCategoriesListData', res))
         }
