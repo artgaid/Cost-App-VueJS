@@ -8,25 +8,44 @@
         :class="[$style.margin]"
       />
       <br />
-      <select v-model="category" v-if="options" :class="[$style.margin]">
+      <input
+        placeholder="Category"
+        v-model="category"
+        :class="[$style.margin]"
+      />
+      <select v-model="category" v-if="options">
         <option v-for="option in options" :value="option" :key="option">
           {{ option }}
         </option>
       </select>
-      <!-- <input placeholder="Category" v-model="category" /> -->
+
       <br />
       <input placeholder="Date" v-model="date" :class="[$style.margin]" />
       <br />
       <button @click="onSaveClick" :class="[$style.margin]">ADD+</button>
     </div>
 
-    <input
-      type="text"
-      v-model="addCategoryToList"
-      placeholder="category"
-      :class="[$style.margin]"
-    />
-    <button @click="addCategory">ADD Category</button>
+    <div>
+      <a href="/add/payment/Food?value=200">
+        <button :class="[$style.margin]">Food</button>
+      </a>
+      <a href="/add/payment/Transport?value=50">
+        <button :class="[$style.margin]">Transport</button>
+      </a>
+      <a href="/add/payment/Entertainment?value=2000">
+        <button :class="[$style.margin]">Entertainment</button>
+      </a>
+    </div>
+
+    <div class="add-Category">
+      <input
+        type="text"
+        v-model="addCategoryToList"
+        placeholder="category"
+        :class="[$style.margin]"
+      />
+      <button @click="addCategory">ADD Category</button>
+    </div>
   </div>
 </template>
 
@@ -70,9 +89,20 @@ export default {
     addCategory() {
       this.$store.commit("addCategoryToList", this.addCategoryToList);
     },
+    goToPage(Name, c, v) {
+      this.category = c;
+      this.value = v;
+      this.$router.push({
+        name: Name,
+      });
+    },
   },
   created() {
     this.fetchCategoryList();
+  },
+  mounted() {
+    this.value = this.$route.query.value;
+    this.category = this.$route.params.Category;
   },
 };
 </script>
@@ -83,7 +113,7 @@ export default {
   margin: 5px;
 }
 .margin {
-  width: 150px;
+  width: 100px;
   margin: 5px;
 }
 </style>
