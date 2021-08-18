@@ -22,7 +22,9 @@
       <br />
       <input placeholder="Date" v-model="date" :class="[$style.margin]" />
       <br />
-      <button @click="onSaveClick" :class="[$style.margin]">ADD+</button>
+      <button @click="onSaveClick" :disabled="!value" :class="[$style.margin]">
+        ADD+
+      </button>
     </div>
 
     <div>
@@ -101,8 +103,10 @@ export default {
     this.fetchCategoryList();
   },
   mounted() {
-    this.value = this.$route.query.value;
-    this.category = this.$route.params.Category;
+    if (this.$route.name === "addPaymentFormUrl") {
+      this.value = Number(this.$route.query?.value) || 0;
+      this.category = this.$route?.params?.Category || "";
+    }
   },
 };
 </script>

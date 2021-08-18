@@ -111,7 +111,7 @@ export default {
   mounted() {
     this.addPaymentValue = this.$route.query.value;
     this.addPaymentCategory = this.$route.params.Category;
-    if (this.addPaymentCategory && this.addPaymentCategory) {
+    if (this.addPaymentCategory) {
       this.addForm = true;
     }
   },

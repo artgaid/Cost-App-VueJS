@@ -6,7 +6,6 @@ import Router from 'vue-router'
 import PageDashboard from '../pages/PageDashboard.vue'
 import Page404 from '../pages/Page404.vue'
 import PageLogin from '../pages/PageLogin.vue'
-// import PageAddPayment from '../pages/PageAddPayment.vue'
 
 Vue.use(Router)
 
@@ -36,7 +35,7 @@ const router = new Router({
         {
             path: '/add/payment/:Category',
             component: PageDashboard,
-            name: 'addPayment'
+            name: 'addPaymentFormUrl'
         },
         {
             path: '/auth',

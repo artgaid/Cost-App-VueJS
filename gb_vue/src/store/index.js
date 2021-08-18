@@ -15,7 +15,7 @@ export default new Vuex.Store({
             // state.paymentsList = [...state.paymentsList]
 
             // Vue.set(state.paymentsList, 0, payload)
-            state.paymentsList = payload
+            state.paymentsList = [...payload, ...state.paymentsList]
         },
         addDataToPaymentList(state, payload) {
             state.paymentsList.push(payload)
@@ -39,18 +39,19 @@ export default new Vuex.Store({
         fetchData({ commit }) {
             if (this.state.paymentsList.length) return
             return new Promise((resolve) => {
-                setTimeout(() => {
-                    const items = []
-                    for (let i = 0; i < 10; i++) {
-                        items.push({
-                            date: "11.08.2021",
-                            category: "Sport",
-                            value: i,
-                            id: i + 1
-                        })
-                    }
-                    resolve(items)
-                }, 2000)
+                // setTimeout(() => { 
+                // *** убрал ассинхронность (имитацию запроса от сервера) ***
+                const items = []
+                for (let i = 0; i < 10; i++) {
+                    items.push({
+                        date: "11.08.2021",
+                        category: "Sport",
+                        value: i,
+                        id: i + 1
+                    })
+                }
+                resolve(items)
+                // }, 2000)
             })
                 .then(res => commit('setPaymentListData', res))
         },
