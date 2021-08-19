@@ -11,7 +11,7 @@
       <span>{{ item.date }}</span>
       <span>{{ item.category }}</span>
       <span>{{ item.value }}</span>
-      <!-- {{ idx + 1 }} {{ item }} -->
+      <button @click="showEditFormFn(idx)">...</button>
     </div>
   </div>
 </template>
@@ -19,10 +19,19 @@
 <script>
 export default {
   name: "PaymentsDisplay",
+  data() {
+    return {};
+  },
   props: {
     list: {
       type: Array,
       default: () => [],
+    },
+  },
+  methods: {
+    showEditFormFn(id) {
+      this.$modal.show("EditForm", { header: id });
+      console.log(id);
     },
   },
 };

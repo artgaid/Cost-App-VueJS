@@ -17,6 +17,10 @@ export default new Vuex.Store({
             // Vue.set(state.paymentsList, 0, payload)
             state.paymentsList = [...payload, ...state.paymentsList]
         },
+        deletePayment(state, payload) {
+            console.log(state.paymentsList);
+            delete state.paymentsList[payload]
+        },
         addDataToPaymentList(state, payload) {
             state.paymentsList.push(payload)
         },

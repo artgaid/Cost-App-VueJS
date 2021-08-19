@@ -3,9 +3,10 @@ import Router from 'vue-router'
 
 
 
-import PageDashboard from '../pages/PageDashboard.vue'
-import Page404 from '../pages/Page404.vue'
-import PageLogin from '../pages/PageLogin.vue'
+// import PageDashboard from '../pages/PageDashboard.vue'
+// import PageAbout from '../pages/PageAbout.vue'
+// import Page404 from '../pages/Page404.vue'
+// import PageLogin from '../pages/PageLogin.vue'
 
 Vue.use(Router)
 
@@ -14,37 +15,37 @@ const router = new Router({
     routes: [
         {
             path: '/',
-            component: PageDashboard,
-            name: 'dashboard'
+            component: () => import(/* webpackChunkName:"Login" */'../pages/PageLogin.vue'),
+            name: 'login'
         },
         {
             path: '/dashboard',
-            component: PageDashboard,
+            component: () => import(/* webpackChunkName:"Dashboard" */'../pages/PageDashboard.vue'),
             name: 'dashboard'
         },
         {
             path: '/dashboard/:pages',
-            component: PageDashboard,
+            component: () => import(/* webpackChunkName:"Dashboard" */'../pages/PageDashboard.vue'),
             name: 'dashboard'
         },
         {
+            path: '/about*',
+            component: () => import(/* webpackChunkName:"About" */'../pages/PageAbout.vue'),
+            name: 'about'
+        },
+        {
             path: '/404',
-            component: Page404,
+            component: () => import(/* webpackChunkName:"404" */'../pages/Page404.vue'),
             name: '404'
         },
         {
             path: '/add/payment/:Category',
-            component: PageDashboard,
+            component: () => import(/* webpackChunkName:"AddPaymentFormUrl" */'../pages/PageDashboard.vue'),
             name: 'addPaymentFormUrl'
         },
         {
-            path: '/auth',
-            component: PageLogin,
-            name: 'login'
-        },
-        {
             path: '*',
-            component: Page404,
+            component: () => import(/* webpackChunkName:"404" */'../pages/Page404.vue'),
         }
     ]
 })

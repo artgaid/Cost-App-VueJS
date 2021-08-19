@@ -7,14 +7,6 @@
     </div>
 
     <div :class="[$style.content]">
-      <div>Category: {{ addPaymentCategory }}</div>
-      <div>Value: {{ addPaymentValue }}</div>
-    </div>
-    <div :class="[$style.content]">
-      <button @click="onForm">ADD NEW COST +</button>
-      <add-payment-form v-show="addForm" @addNewPayment="addData" />
-    </div>
-    <div :class="[$style.content]">
       <payments-display :list="pageElements" />
       Total Value: {{ getFPV }}
       <pagination
@@ -24,12 +16,15 @@
         @changePage="addChengePages"
       />
     </div>
+
+    <button @click="showPaymentFormFn" :class="[$style.content]">
+      ADD NEW COST +
+    </button>
   </div>
 </template>
 
 <script>
 import { mapMutations, mapGetters, mapActions } from "vuex";
-import AddPaymentForm from "../components/AddPaymentForm.vue";
 import Pagination from "../components/Pagination.vue";
 import PaymentsDisplay from "../components/PaymentsDisplay.vue";
 
@@ -37,38 +32,32 @@ export default {
   name: "Dashboard",
   components: {
     PaymentsDisplay,
-    AddPaymentForm,
     Pagination,
   },
   data() {
     return {
-      addForm: "",
       pages: 1,
       n: 5,
       addPaymentCategory: "",
       addPaymentValue: 0,
+      showPaymentForm: "",
+      settings: {
+        compName: "addPayment",
+      },
     };
   },
   methods: {
     ...mapMutations({
-      loadData: "setPaymentListData",
       addDataToStore: "addDataToPaymentList",
     }),
     ...mapActions({
       fetchListData: "fetchData",
     }),
-    onForm() {
-      if (this.addForm == false) {
-        this.addForm = true;
-      } else {
-        this.addForm = false;
-      }
-    },
-    addData(newPayment) {
-      this.addDataToStore(newPayment);
-    },
     addChengePages(p) {
       this.pages = p;
+    },
+    showPaymentFormFn() {
+      this.$modal.show("AddPaymentForm", { header: "Payment Form" });
     },
     fetchData() {
       return [
@@ -107,13 +96,13 @@ export default {
     if (this.$route?.params?.pages) {
       this.addChengePages(this.$route.params.pages);
     }
+    if (this.addPaymentCategory) {
+      this.showPaymentFormFn();
+    }
   },
   mounted() {
     this.addPaymentValue = this.$route.query.value;
     this.addPaymentCategory = this.$route.params.Category;
-    if (this.addPaymentCategory) {
-      this.addForm = true;
-    }
   },
 };
 </script>
@@ -124,6 +113,6 @@ export default {
 }
 
 .content {
-  padding-top: 30px;
+  margin-top: 30px;
 }
 </style>

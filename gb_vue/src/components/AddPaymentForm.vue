@@ -86,7 +86,7 @@ export default {
         value: +this.value,
         id: this.id,
       };
-      this.$emit("addNewPayment", data);
+      this.$store.commit("addDataToPaymentList", data);
     },
     addCategory() {
       this.$store.commit("addCategoryToList", this.addCategoryToList);
