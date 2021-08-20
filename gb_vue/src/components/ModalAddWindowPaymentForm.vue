@@ -4,7 +4,6 @@
       {{ settings.header }}
     </div>
     <div class="content">
-      <!-- <edit-form :buttonID="settings.header" /> -->
       <component :buttonID="settings.header" :is="settings.name"></component>
     </div>
     <div class="footer">

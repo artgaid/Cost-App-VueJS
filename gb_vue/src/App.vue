@@ -27,14 +27,9 @@ export default {
     return {
       modalShown: false,
       settings: {},
-      cli: {},
     };
   },
   methods: {
-    clik(element) {
-      console.log(element);
-      // getBoundingClientRect()
-    },
     goToPage(Name) {
       this.$router.push({
         name: Name,

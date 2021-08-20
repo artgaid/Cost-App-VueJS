@@ -62,6 +62,7 @@ export default {
       addCategoryToList: "",
       date: "",
       id: 0,
+      editID: {},
     };
   },
   computed: {
@@ -75,12 +76,15 @@ export default {
     options() {
       return this.$store.getters.getCategories;
     },
+    edits() {
+      return this.$store.getters.getEdit;
+    },
   },
   methods: {
-    ...mapActions(["fetchCategoryList"]),
+    ...mapActions(["fetchCategoryList", "editList"]),
     onSaveClick() {
       this.id += 1;
-      const data = {
+      let data = {
         date: this.date || this.getCurrentDate,
         category: this.category,
         value: +this.value,
@@ -98,9 +102,19 @@ export default {
         name: Name,
       });
     },
+    addEdit() {
+      this.editID = this.$store.getters.getEdit;
+    },
   },
   created() {
+    this.editList();
     this.fetchCategoryList();
+    this.addEdit();
+    if (this.editID) {
+      this.date = this.editID.date;
+      this.category = this.editID.category;
+      this.value = this.editID.value;
+    }
   },
   mounted() {
     if (this.$route.name === "addPaymentFormUrl") {

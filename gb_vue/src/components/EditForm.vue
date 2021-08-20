@@ -1,18 +1,26 @@
 <template>
   <div>
-    <div class="content">
-      <a href="#">Редактировать</a>
+    <div class="edit_content">
+      <a class="edit_links" @click="addEditId" href="#">
+        <div>Edit</div>
+      </a>
       <br />
-      <a @click="deletePayment" href="#">Удалить</a>
+      <a class="edit_links" @click="deletePayment" href="#">
+        <div>Delete</div>
+      </a>
     </div>
   </div>
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   name: "EditForm",
   data() {
-    return {};
+    return {
+      Data: {},
+    };
   },
   props: {
     buttonID: {
@@ -20,13 +28,27 @@ export default {
     },
   },
   methods: {
+    ...mapActions({
+      ListData: "DataList",
+    }),
+    addEditId() {
+      this.$store.commit("addEditPayment", this.buttonID);
+      this.$modal.show("AddPaymentForm", { header: "Payment Form" });
+      this.deletePayment();
+    },
     deletePayment() {
-      console.log(this.buttonID);
       this.$store.commit("deletePayment", this.buttonID);
     },
   },
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
+.edit_content {
+  padding: 0 10px;
+}
+.edit_links {
+  display: block;
+  text-decoration: none;
+}
 </style>
