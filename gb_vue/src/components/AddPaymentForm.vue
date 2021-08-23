@@ -5,6 +5,7 @@
         type="number"
         placeholder="Value"
         v-model.number="value"
+        name="value"
         :class="[$style.margin]"
       />
       <br />
@@ -52,7 +53,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapMutations } from "vuex";
 export default {
   name: "AddPaymentForm",
   data() {
@@ -81,6 +82,7 @@ export default {
     },
   },
   methods: {
+    ...mapMutations(["addDataToPaymentList"]),
     ...mapActions(["fetchCategoryList", "editList"]),
     onSaveClick() {
       this.id += 1;
@@ -90,7 +92,8 @@ export default {
         value: +this.value,
         id: this.id,
       };
-      this.$store.commit("addDataToPaymentList", data);
+
+      this.addDataToPaymentList(data);
     },
     addCategory() {
       this.$store.commit("addCategoryToList", this.addCategoryToList);

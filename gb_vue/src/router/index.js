@@ -44,6 +44,11 @@ const router = new Router({
             name: 'addPaymentFormUrl'
         },
         {
+            path: '/calculator',
+            component: () => import( /* webpackChunkName:"Calculator" */ '../pages/PageCalculator.vue'),
+            name: 'calculator'
+        },
+        {
             path: '*',
             component: () => import(/* webpackChunkName:"404" */'../pages/Page404.vue'),
         }

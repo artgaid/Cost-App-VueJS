@@ -3,6 +3,7 @@
     <div class="page-links">
       <router-link to="/dashboard">Dashboard</router-link> /
       <router-link to="/about">About</router-link> /
+      <router-link to="/calculator">Calculator</router-link> /
       <button @click="goToPage(404)">404</button>
     </div>
     <div class="content">

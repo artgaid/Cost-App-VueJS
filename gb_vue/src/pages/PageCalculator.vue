@@ -1,12 +1,23 @@
 <template>
   <div class="calc">
-    {{ message }}
-
+    <br />
+    <div class="header">{{ message }}</div>
+    <br />
     <div>
-      <input type="number" placeholder="Operation1" v-model.number="oper1" />
-      <input type="number" placeholder="Operation2" v-model.number="oper2" />
+      <input
+        type="number"
+        placeholder="Operation1"
+        name="operand1"
+        v-model.number="oper1"
+      />
+      <input
+        type="number"
+        placeholder="Operation2"
+        name="operand2"
+        v-model.number="oper2"
+      />
 
-      ={{ result }}
+      = {{ result }}
       <br />
       <!-- = fibResult - {{ fibResult }} -->
 
@@ -26,9 +37,10 @@
           v-for="operation in operations"
           :key="operation"
           @click="calculate(operation)"
+          :name="operation"
           :title="operation"
-          :disabled="oper2 === 0"
         >
+          <!-- :disabled="oper2 === 0 && operation === '/'" -->
           {{ operation }}
         </button>
         <!-- Сократили запись -->
@@ -43,12 +55,13 @@
       <br />
 
       <input type="checkbox" v-model="checkedOn" /> Отоброзить клавиатуру
-      <div v-show="checkedOn === true" class="array">
+      <div v-show="checkedOn" class="array">
         <!-- {{ myNumbers }} -->
         <div class="numbers">
           <button
             v-for="(item, index) in myNumbers"
             :key="`${index}_list`"
+            :name="item"
             @click="keyboard(item)"
           >
             {{ item }}
@@ -56,14 +69,14 @@
         </div>
         <input
           type="radio"
-          name="checkOperation"
+          name="checkOperation1"
           v-model="check1"
           @click="checkOper1()"
         />
         Значение 1
         <input
           type="radio"
-          name="checkOperation"
+          name="checkOperation2"
           v-model="check2"
           @click="checkOper2()"
         />
@@ -83,16 +96,16 @@
 export default {
   name: "Calculator",
   data: () => ({
-    message: "Hello Vue",
-    oper1: "",
-    oper2: "",
+    message: "Hello my Calculator",
+    oper1: 0,
+    oper2: 0,
     result: 0,
     fibResult: 0,
     error: "",
     operations: ["+", "-", "*", "/", "n", "//"],
     myNumbers: [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, "DEL"],
     logs: {},
-    checkedOn: "",
+    checkedOn: "true",
     check1: "",
     check2: "",
   }),
@@ -109,12 +122,12 @@ export default {
     keyboard(n) {
       if (this.check1 === null) {
         if (n === "DEL") {
-          this.oper1 = "";
-        } else this.oper1 += n;
-      } else {
+          this.oper1 = 0;
+        } else this.oper1 += Number(n);
+      } else if (this.check2 === null) {
         if (n === "DEL") {
-          this.oper2 = "";
-        } else this.oper2 += n;
+          this.oper2 = 0;
+        } else this.oper2 += Number(n);
       }
     },
     calculate(oper = "+") {
