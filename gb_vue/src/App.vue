@@ -12,6 +12,9 @@
     <transition name="fade">
       <modal-add-window-payment-form v-if="modalShown" :settings="settings" />
     </transition>
+    <transition name="fade">
+      <context-menu />
+    </transition>
   </div>
 </template>
 
@@ -21,6 +24,10 @@ export default {
     ModalAddWindowPaymentForm: () =>
       import(
         /* webpackChunkName:"ModalAddWindowPaymentForm" */ "./components/ModalAddWindowPaymentForm.vue"
+      ),
+    ContextMenu: () =>
+      import(
+        /* webpackChunkName:"ContextMenu" */ "./components/ContextMenu.vue"
       ),
   },
   name: "App",

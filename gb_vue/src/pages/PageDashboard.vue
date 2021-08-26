@@ -91,8 +91,8 @@ export default {
       return this.$store.getters.getFullPaymentValue;
     },
   },
-  async created() {
-    await this.fetchListData();
+  created() {
+    this.fetchListData();
     if (this.$route?.params?.pages) {
       this.addChengePages(this.$route.params.pages);
     }

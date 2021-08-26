@@ -18,9 +18,9 @@ export default new Vuex.Store({
             // Vue.set(state.paymentsList, 0, payload)
             state.paymentsList = [...payload, ...state.paymentsList]
         },
-        addEditPayment(state, payload) {
-            state.paymentsID = state.paymentsList[payload]
-        },
+        // addEditPayment(state, payload) {
+        //     state.paymentsID = state.paymentsList[payload]
+        // },
         deletePayment(state, payload) {
             delete state.paymentsList[payload]
         },
@@ -40,20 +40,20 @@ export default new Vuex.Store({
             return state.paymentsList.reduce((res, cur) => res + cur.value, 0)
         },
         getCategories: state => state.categories,
-        getEdit: state => state.paymentsID
+        // getEdit: state => state.paymentsID
 
     },
     actions: {
-        editList({ commit }) {
-            if (this.state.paymentsID) return
-            return new Promise((resolve) => {
-                setTimeout(() => {
-                    const edit = this.state.paymentsID
-                    resolve(edit)
-                }, 1000)
-            })
-                .then(res => commit('addEditPayment', res))
-        },
+        // editList({ commit }) {
+        //     if (this.state.paymentsID) return
+        //     return new Promise((resolve) => {
+        //         setTimeout(() => {
+        //             const edit = this.state.paymentsID
+        //             resolve(edit)
+        //         }, 1000)
+        //     })
+        //         .then(res => commit('addEditPayment', res))
+        // },
         fetchData({ commit }) {
             if (this.state.paymentsList.length) return
             return new Promise((resolve) => {

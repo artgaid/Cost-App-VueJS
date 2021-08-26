@@ -13,10 +13,15 @@ Vue.use(Router)
 const router = new Router({
     mode: 'history',
     routes: [
+        // {
+        //     path: '/',
+        //     component: () => import(/* webpackChunkName:"Login" */'../pages/PageLogin.vue'),
+        //     name: 'login'
+        // },
         {
             path: '/',
-            component: () => import(/* webpackChunkName:"Login" */'../pages/PageLogin.vue'),
-            name: 'login'
+            component: () => import(/* webpackChunkName:"Dashboard" */'../pages/PageDashboard.vue'),
+            name: 'dashboard'
         },
         {
             path: '/dashboard',

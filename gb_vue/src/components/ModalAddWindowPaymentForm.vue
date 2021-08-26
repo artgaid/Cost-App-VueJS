@@ -1,10 +1,10 @@
 <template>
   <div class="wrapper">
-    <div class="margin_center" v-if="settings.name !== 'EditForm'">
+    <div class="margin_center" v-if="settings.name">
       {{ settings.header }}
     </div>
     <div class="content">
-      <component :buttonID="settings.header" :is="settings.name"></component>
+      <component :is="settings.name"></component>
     </div>
     <div class="footer">
       <button @click="onClose" class="margin_center">Close</button>
@@ -19,8 +19,6 @@ export default {
     AddPaymentForm: () =>
       import(/* webpackChunkName:"AddPaymentForm" */ "./AddPaymentForm.vue"),
     Auth: () => import(/* webpackChunkName:"Auth" */ "./Auth.vue"),
-    EditForm: () =>
-      import(/* webpackChunkName:"AddPaymentForm" */ "./EditForm.vue"),
   },
   props: {
     settings: {

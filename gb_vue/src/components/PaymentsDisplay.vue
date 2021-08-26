@@ -11,7 +11,7 @@
       <span>{{ item.date }}</span>
       <span>{{ item.category }}</span>
       <span>{{ item.value }}</span>
-      <button @click="showEditFormFn(idx)">...</button>
+      <span @click="onContextMenuClick($event, item)">...</span>
     </div>
   </div>
 </template>
@@ -29,9 +29,22 @@ export default {
     },
   },
   methods: {
-    showEditFormFn(id) {
-      this.$modal.show("EditForm", { header: id });
-      console.log(id);
+    onContextMenuClick(event, item) {
+      const items = [
+        {
+          text: "Редактировать",
+          action: () => {
+            console.log("edit", item);
+          },
+        },
+        {
+          text: "Удалить",
+          action: () => {
+            console.log("delete", item);
+          },
+        },
+      ];
+      this.$context.show({ event, items });
     },
   },
 };
