@@ -1,30 +1,51 @@
 <template>
-  <div class="content">
-    <div :class="[$style.wrapper]">
-      <header>
-        <div :class="[$style.title]">My personal costs</div>
-      </header>
-    </div>
+  <v-container>
+    <v-row>
+      <v-col cols="8">
+        <div class="text-h5 text-sm-h3">My personal costs</div>
+        <v-dialog v-model="dialog" width="500">
+          <template v-slot:activator="{ on }">
+            <v-btn color="teal" dark v-on="on">
+              ADD NEW COST <v-icon>mdi-plus</v-icon>
+            </v-btn>
+          </template>
+          <v-card>
+            <add-payment-form @close="dialog = false" />
+            <!-- <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="primary" text @click="addDataToPaymentList">
+                ADD
+              </v-btn>
+            </v-card-actions> -->
+          </v-card>
+        </v-dialog>
 
-    <div :class="[$style.content]">
-      <payments-display :list="pageElements" />
-      Total Value: {{ getFPV }}
-      <pagination
-        :page="pages"
-        :n="n"
-        :length="paymentsList.length"
-        @changePage="addChengePages"
-      />
-    </div>
+        <br />
+        <div class="content">
+          <div :class="[$style.content]">
+            <payments-display :list="pageElements" />
+            Total Value: {{ getFPV }}
+            <pagination
+              :page="pages"
+              :n="n"
+              :length="paymentsList.length"
+              @changePage="addChengePages"
+            />
+          </div>
 
-    <button @click="showPaymentFormFn" :class="[$style.content]">
-      ADD NEW COST +
-    </button>
-  </div>
+          <button @click="showPaymentFormFn" :class="[$style.content]">
+            ADD NEW COST +
+          </button>
+        </div>
+      </v-col>
+      <v-col cols="4"> CHART </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
 import { mapMutations, mapGetters, mapActions } from "vuex";
+import AddPaymentForm from "../components/AddPaymentForm.vue";
 import Pagination from "../components/Pagination.vue";
 import PaymentsDisplay from "../components/PaymentsDisplay.vue";
 
@@ -33,9 +54,11 @@ export default {
   components: {
     PaymentsDisplay,
     Pagination,
+    AddPaymentForm,
   },
   data() {
     return {
+      dialog: false,
       pages: 1,
       n: 5,
       addPaymentCategory: "",
@@ -108,11 +131,11 @@ export default {
 </script>
 
 <style  lang="scss" module>
-.title {
-  font-size: 50px;
-}
+// .title {
+//   font-size: 50px;
+// }
 
-.content {
-  margin-top: 30px;
-}
+// .content {
+//   margin-top: 30px;
+// }
 </style>
