@@ -17,8 +17,11 @@
 </template>
 
 <script>
+import { mapMutations } from "vuex";
+
 export default {
   name: "PaymentsDisplay",
+
   data() {
     return {};
   },
@@ -29,18 +32,24 @@ export default {
     },
   },
   methods: {
+    ...mapMutations(["deletePayment", "editPayment"]),
     onContextMenuClick(event, item) {
       const items = [
         {
           text: "Редактировать",
           action: () => {
             console.log("edit", item);
+            this.deletePayment(item);
+            this.$modal.show("AddPaymentForm", { header: "Payment Form" });
+            this.editPayment(item);
           },
         },
         {
           text: "Удалить",
           action: () => {
             console.log("delete", item);
+
+            this.deletePayment(item);
           },
         },
       ];
