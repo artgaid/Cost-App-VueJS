@@ -65,7 +65,7 @@ export default new Vuex.Store({
                 // setTimeout(() => { 
                 // *** убрал ассинхронность (имитацию запроса от сервера) ***
                 const items = []
-                for (let i = 0; i < 10; i++) {
+                for (let i = 0; i < 20; i++) {
                     items.push({
                         date: "11.08.2021",
                         category: "Sport",

@@ -3,6 +3,7 @@
     <v-row>
       <v-col cols="8">
         <div class="text-h5 text-sm-h3">My personal costs</div>
+        <br />
         <v-dialog v-model="dialog" width="500">
           <template v-slot:activator="{ on }">
             <v-btn color="teal" dark v-on="on">
@@ -22,20 +23,25 @@
 
         <br />
         <div class="content">
-          <div :class="[$style.content]">
+          <div class="content">
             <payments-display :list="pageElements" />
-            Total Value: {{ getFPV }}
-            <pagination
-              :page="pages"
-              :n="n"
-              :length="paymentsList.length"
-              @changePage="addChengePages"
-            />
+            <span class="font-weight-black"> Total Value: {{ getFPV }} </span>
+            <v-pagination
+              v-model="pages"
+              :length="Math.ceil(paymentsList.length / n)"
+            >
+              <!-- <pagination
+                :page="pages"
+                :n="n"
+                :length="paymentsList.length"
+                @changePage="addChengePages"
+              /> -->
+            </v-pagination>
           </div>
-
+          <!-- 
           <button @click="showPaymentFormFn" :class="[$style.content]">
             ADD NEW COST +
-          </button>
+          </button> -->
         </div>
       </v-col>
       <v-col cols="4"> CHART </v-col>
@@ -46,21 +52,21 @@
 <script>
 import { mapMutations, mapGetters, mapActions } from "vuex";
 import AddPaymentForm from "../components/AddPaymentForm.vue";
-import Pagination from "../components/Pagination.vue";
+// import Pagination from "../components/Pagination.vue";
 import PaymentsDisplay from "../components/PaymentsDisplay.vue";
 
 export default {
   name: "Dashboard",
   components: {
     PaymentsDisplay,
-    Pagination,
+    // Pagination,
     AddPaymentForm,
   },
   data() {
     return {
       dialog: false,
       pages: 1,
-      n: 5,
+      n: 10,
       addPaymentCategory: "",
       addPaymentValue: 0,
       showPaymentForm: "",
@@ -131,11 +137,4 @@ export default {
 </script>
 
 <style  lang="scss" module>
-// .title {
-//   font-size: 50px;
-// }
-
-// .content {
-//   margin-top: 30px;
-// }
 </style>
