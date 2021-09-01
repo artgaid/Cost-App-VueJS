@@ -1,10 +1,10 @@
 <template>
-  <div class="auth_form">
-    Login: <input type="text" />
-    <br />
-    <br />
-    Pass: <input type="text" />
-  </div>
+  <v-card class="text-left pa-8">
+    Login: <v-text-field placeholder="Artem" solo></v-text-field>
+    Password:
+    <v-text-field placeholder="123qWe321" solo></v-text-field>
+    <v-btn color="teal" dark>GO</v-btn>
+  </v-card>
 </template>
 
 <script>
@@ -14,8 +14,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.auth_form {
-  padding: 10px;
-  text-align: end;
-}
 </style>

@@ -12,10 +12,40 @@
       <v-col cols="4">{{ item.date }}</v-col>
       <v-col cols="4">{{ item.category }}</v-col>
       <v-col cols="2">{{ item.value }}</v-col>
-      <v-col cols="1">
+      <!-- <v-col cols="1">
         <v-icon @click="onContextMenuClick($event, item)"
           >mdi-dots-vertical</v-icon
         >
+      </v-col> -->
+      <v-col cols="1">
+        <v-dialog v-model="contextDialog" width="500">
+          <template v-slot:activator="{ on }">
+            <v-btn color="teal" dark icon v-on="on">
+              <v-icon>mdi-dots-vertical</v-icon>
+            </v-btn>
+          </template>
+          <v-card>
+            <context-menu @close="contextDialog = false" />
+          </v-card>
+        </v-dialog>
+
+        <!-- <v-menu bottom left v-model="contextDialog">
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              color="teal"
+              dark
+              icon
+              v-bind="attrs"
+              v-on="on"
+              @click="onContextMenuClick($event, item)"
+            >
+              <v-icon>mdi-dots-vertical</v-icon>
+            </v-btn>
+          </template>
+          <v-list>
+            <context-menu @close="contextDialog = false" />
+          </v-list>
+        </v-menu> -->
       </v-col>
     </v-row>
   </v-container>
@@ -23,12 +53,16 @@
 
 <script>
 import { mapMutations } from "vuex";
+import ContextMenu from "./ContextMenu.vue";
 
 export default {
+  components: { ContextMenu },
   name: "PaymentsDisplay",
 
   data() {
-    return {};
+    return {
+      contextDialog: false,
+    };
   },
   props: {
     list: {

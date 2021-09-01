@@ -1,5 +1,5 @@
 <template>
-  <div class="context" v-if="show" :style="styles">
+  <!-- <div class="context" v-if="show" :style="styles">
     <div
       v-for="(item, idx) in items"
       :key="idx"
@@ -8,7 +8,14 @@
     >
       {{ item.text }}
     </div>
-  </div>
+  </div> -->
+
+  <v-card>
+    Удалить Редактировать
+    <v-btn v-for="(item, idx) in items" :key="idx" @click="onClick(item)">
+      {{ item.text }}
+    </v-btn>
+  </v-card>
 </template>
 
 <script>
@@ -62,16 +69,16 @@ export default {
 </script>
 
 <style lang="scss" scoped  >
-.context {
-  position: absolute;
-  background-color: beige;
-  padding: 15px;
-  cursor: pointer;
-  &_item {
-    padding: 5px 0;
-    &:hover {
-      color: brown;
-    }
-  }
-}
+// .context {
+//   position: absolute;
+//   background-color: beige;
+//   padding: 15px;
+//   cursor: pointer;
+//   &_item {
+//     padding: 5px 0;
+//     &:hover {
+//       color: brown;
+//     }
+//   }
+// }
 </style>
