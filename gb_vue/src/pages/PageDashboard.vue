@@ -11,13 +11,13 @@
             </v-btn>
           </template>
           <v-card>
-            <add-payment-form @close="dialog = false" />
+            <add-payment-form @close="dialog = !dialog" />
           </v-card>
         </v-dialog>
 
         <br />
         <div>
-          <payments-display :list="pageElements" />
+          <payments-display :list="pageElements" @show="dialog = !dialog" />
           <v-alert class="font-weight-black">
             Total Value: {{ getFPV }}
           </v-alert>
@@ -26,6 +26,7 @@
             v-model="pages"
             :length="Math.ceil(paymentsList.length / n)"
           >
+            <!-- *** Пагинация без Vuetify -->
             <!-- <pagination
                 :page="pages"
                 :n="n"
@@ -43,7 +44,7 @@
 <script>
 import { mapMutations, mapGetters, mapActions } from "vuex";
 import AddPaymentForm from "../components/AddPaymentForm.vue";
-// import Pagination from "../components/Pagination.vue";
+// import Pagination from "../components/Pagination.vue"; // *** Пагинация без Vuetify ***
 import PaymentsDisplay from "../components/PaymentsDisplay.vue";
 
 export default {
@@ -60,7 +61,7 @@ export default {
       n: 10,
       addPaymentCategory: "",
       addPaymentValue: 0,
-      showPaymentForm: "",
+      // showPaymentForm: "",
       settings: {
         compName: "addPayment",
       },
@@ -73,31 +74,34 @@ export default {
     ...mapActions({
       fetchListData: "fetchData",
     }),
-    addChengePages(p) {
-      this.pages = p;
-    },
-    showPaymentFormFn() {
-      this.$modal.show("AddPaymentForm", { header: "Payment Form" });
-    },
-    fetchData() {
-      return [
-        {
-          date: "28.03.2020",
-          category: "Food",
-          value: 169,
-        },
-        {
-          date: "24.03.2020",
-          category: "Transport",
-          value: 360,
-        },
-        {
-          date: "24.03.2020",
-          category: "Food",
-          value: 532,
-        },
-      ];
-    },
+    // *** Пагинация без Vuetify ***
+    // addChengePages(p) {
+    //   this.pages = p;
+    // },
+    // *** реализация модуля ***
+    // showPaymentFormFn() {
+    //   this.$modal.show("AddPaymentForm", { header: "Payment Form" });
+    // },
+
+    // fetchData() {
+    //   return [
+    //     {
+    //       date: "28.03.2020",
+    //       category: "Food",
+    //       value: 169,
+    //     },
+    //     {
+    //       date: "24.03.2020",
+    //       category: "Transport",
+    //       value: 360,
+    //     },
+    //     {
+    //       date: "24.03.2020",
+    //       category: "Food",
+    //       value: 532,
+    //     },
+    //   ];
+    // },
   },
   computed: {
     ...mapGetters({

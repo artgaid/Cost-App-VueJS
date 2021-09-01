@@ -18,7 +18,33 @@
         >
       </v-col> -->
       <v-col cols="1">
-        <v-dialog v-model="contextDialog" width="500">
+        <div class="text-center">
+          <v-menu
+            rounded="lg"
+            left
+            offset-x
+            transition="scale-transition"
+            origin="top right"
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn color="teal" v-bind="attrs" dark icon v-on="on">
+                <v-icon>mdi-dots-vertical</v-icon>
+              </v-btn>
+            </template>
+
+            <v-list>
+              <v-list-item v-for="(contextItem, index) in items" :key="index">
+                <v-list-item-title>
+                  <v-btn @click="onClick(item, contextItem)">
+                    {{ contextItem.text }}
+                  </v-btn>
+                </v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu>
+        </div>
+
+        <!-- <v-dialog v-model="contextDialog" width="500">
           <template v-slot:activator="{ on }">
             <v-btn color="teal" dark icon v-on="on">
               <v-icon>mdi-dots-vertical</v-icon>
@@ -27,7 +53,7 @@
           <v-card>
             <context-menu @close="contextDialog = false" />
           </v-card>
-        </v-dialog>
+        </v-dialog> -->
 
         <!-- <v-menu bottom left v-model="contextDialog">
           <template v-slot:activator="{ on, attrs }">
@@ -53,15 +79,31 @@
 
 <script>
 import { mapMutations } from "vuex";
-import ContextMenu from "./ContextMenu.vue";
 
 export default {
-  components: { ContextMenu },
   name: "PaymentsDisplay",
 
   data() {
     return {
-      contextDialog: false,
+      items: [
+        {
+          text: "Редактировать",
+          action: (item) => {
+            console.log("edit", item);
+            this.deletePayment(item);
+            this.editPayment(item);
+            this.$emit("show");
+          },
+        },
+        {
+          text: "Удалить",
+          action: (item) => {
+            console.log("delete", item);
+
+            this.deletePayment(item);
+          },
+        },
+      ],
     };
   },
   props: {
@@ -72,27 +114,29 @@ export default {
   },
   methods: {
     ...mapMutations(["deletePayment", "editPayment"]),
-    onContextMenuClick(event, item) {
-      const items = [
-        {
-          text: "Редактировать",
-          action: () => {
-            console.log("edit", item);
-            this.deletePayment(item);
-            this.$modal.show("AddPaymentForm", { header: "Payment Form" });
-            this.editPayment(item);
-          },
-        },
-        {
-          text: "Удалить",
-          action: () => {
-            console.log("delete", item);
+    // onContextMenuClick(event, item) {
+    //   const items = [
+    //     {
+    //       text: "Редактировать",
+    //       action: () => {
+    //         console.log("edit", item);
+    //         this.deletePayment(item);
+    //         this.$modal.show("AddPaymentForm", { header: "Payment Form" });
+    //         this.editPayment(item);
+    //       },
+    //     },
+    //     {
+    //       text: "Удалить",
+    //       action: () => {
+    //         console.log("delete", item);
 
-            this.deletePayment(item);
-          },
-        },
-      ];
-      this.$context.show({ event, items });
+    //         this.deletePayment(item);
+    //       },
+    //     },
+    //   ];
+    // },
+    onClick(item, contextItem) {
+      contextItem.action(item);
     },
   },
 };

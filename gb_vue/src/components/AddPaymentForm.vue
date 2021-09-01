@@ -15,6 +15,7 @@
       SAVE
     </v-btn>
 
+    <!-- *** кнопки автоматического добавления (через ссылку) *** -->
     <!-- <div>
         <a href="/add/payment/Food?value=200">
           <button>Food</button>
@@ -40,7 +41,7 @@ export default {
       addCategoryToList: "",
       date: "",
       id: 0,
-      edit: this.$store.getters.getEdit,
+      edit: "",
     };
   },
   computed: {
@@ -53,6 +54,19 @@ export default {
     },
     options() {
       return this.$store.getters.getCategories;
+    },
+    getEdit() {
+      return this.$store.getters.getEdit;
+    },
+    editOptions() {
+      console.log("options");
+      return () => {
+        if (this.edit !== this.$store.getters.getEdit) {
+          this.edit = this.$store.getters.getEdit;
+          this.addEditToForm();
+        }
+        return;
+      };
     },
   },
   methods: {
@@ -68,6 +82,10 @@ export default {
 
       this.addDataToPaymentList(data);
       this.$emit("close");
+      (this.value = ""),
+        (this.category = ""),
+        (this.addCategoryToList = ""),
+        (this.date = "");
     },
     addCategory() {
       this.$store.commit("addCategoryToList", this.addCategoryToList);
@@ -79,20 +97,23 @@ export default {
         name: Name,
       });
     },
+    addEditToForm() {
+      console.log("editform", this.edit);
+      this.value = this.edit.value;
+      this.category = this.edit.category;
+      this.date = this.edit.date;
+    },
   },
   created() {
     this.fetchCategoryList();
     this.editList();
   },
   mounted() {
+    console.log("mounted");
+    this.editOptions();
     if (this.$route.name === "addPaymentFormUrl") {
       this.value = Number(this.$route.query?.value) || 0;
       this.category = this.$route?.params?.Category || "";
-    } else if (this.edit) {
-      console.log(this.edit);
-      this.value = this.edit.value;
-      this.category = this.edit.category;
-      this.date = this.edit.date;
     }
   },
 };
