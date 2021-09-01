@@ -12,36 +12,27 @@
           </template>
           <v-card>
             <add-payment-form @close="dialog = false" />
-            <!-- <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="primary" text @click="addDataToPaymentList">
-                ADD
-              </v-btn>
-            </v-card-actions> -->
           </v-card>
         </v-dialog>
 
         <br />
-        <div class="content">
-          <div class="content">
-            <payments-display :list="pageElements" />
-            <span class="font-weight-black"> Total Value: {{ getFPV }} </span>
-            <v-pagination
-              v-model="pages"
-              :length="Math.ceil(paymentsList.length / n)"
-            >
-              <!-- <pagination
+        <div>
+          <payments-display :list="pageElements" />
+          <v-alert class="font-weight-black">
+            Total Value: {{ getFPV }}
+          </v-alert>
+          <v-pagination
+            color="teal"
+            v-model="pages"
+            :length="Math.ceil(paymentsList.length / n)"
+          >
+            <!-- <pagination
                 :page="pages"
                 :n="n"
                 :length="paymentsList.length"
                 @changePage="addChengePages"
               /> -->
-            </v-pagination>
-          </div>
-          <!-- 
-          <button @click="showPaymentFormFn" :class="[$style.content]">
-            ADD NEW COST +
-          </button> -->
+          </v-pagination>
         </div>
       </v-col>
       <v-col cols="4"> CHART </v-col>

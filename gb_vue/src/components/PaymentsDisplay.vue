@@ -7,7 +7,7 @@
       <v-col cols="2">Value</v-col>
       <v-col cols="1"></v-col>
     </v-row>
-    <v-row v-for="item in list" :key="item.id">
+    <v-row v-for="item in list" :key="item.id" :class="[$style.border_btm]">
       <v-col cols="1">{{ item.id }}</v-col>
       <v-col cols="4">{{ item.date }}</v-col>
       <v-col cols="4">{{ item.category }}</v-col>
@@ -64,5 +64,8 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" module>
+.border_btm {
+  border-bottom: 1px solid rgb(0, 0, 0, 0.3);
+}
 </style>

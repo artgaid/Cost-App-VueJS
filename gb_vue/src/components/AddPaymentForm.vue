@@ -3,63 +3,29 @@
     <v-text-field v-model="date" label="date" />
     <v-text-field v-model.number="value" label="value" />
     <v-select v-model="category" label="category" :items="options" />
-    <v-btn @click="onSaveClick" :disabled="!value"> ADD+ </v-btn>
 
-    <!-- <div :class="[$style.border]">
-      <div :class="[$style.border]">
-        <input
-          type="number"
-          placeholder="Value"
-          v-model.number="value"
-          name="value"
-          :class="[$style.margin]"
-        />
-        <br />
-        <input
-          placeholder="Category"
-          v-model="category"
-          :class="[$style.margin]"
-        />
-        <select v-model="category" v-if="options">
-          <option v-for="option in options" :value="option" :key="option">
-            {{ option }}
-          </option>
-        </select>
+    <div class="d-flex">
+      <v-text-field v-model="addCategoryToList" label=" + category" />
+      <v-btn color="teal" dark class="ma-3" @click="addCategory"
+        >ADD Category</v-btn
+      >
+    </div>
 
-        <br />
-        <input placeholder="Date" v-model="date" :class="[$style.margin]" />
-        <br />
-        <button
-          @click="onSaveClick"
-          :disabled="!value"
-          :class="[$style.margin]"
-        >
-          ADD+
-        </button>
-      </div>
+    <v-btn color="teal" dark @click="onSaveClick" :disabled="!value">
+      SAVE
+    </v-btn>
 
-      <div>
+    <!-- <div>
         <a href="/add/payment/Food?value=200">
-          <button :class="[$style.margin]">Food</button>
+          <button>Food</button>
         </a>
         <a href="/add/payment/Transport?value=50">
-          <button :class="[$style.margin]">Transport</button>
+          <button>Transport</button>
         </a>
         <a href="/add/payment/Entertainment?value=2000">
-          <button :class="[$style.margin]">Entertainment</button>
+          <button>Entertainment</button>
         </a>
-      </div>
-
-      <div class="add-Category">
-        <input
-          type="text"
-          v-model="addCategoryToList"
-          placeholder="category"
-          :class="[$style.margin]"
-        />
-        <button @click="addCategory">ADD Category</button>
-      </div>
-    </div> -->
+      </div> -->
   </v-card>
 </template>
 
@@ -133,12 +99,4 @@ export default {
 </script>
 
 <style lang="scss" module>
-// .border {
-//   border: 1px solid #000;
-//   margin: 5px;
-// }
-// .margin {
-//   width: 100px;
-//   margin: 5px;
-// }
 </style>
