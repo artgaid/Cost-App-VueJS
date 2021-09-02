@@ -50,7 +50,6 @@ export default new Vuex.Store({
     },
     actions: {
         editList({ commit }) {
-            if (this.state.edit) return
             return new Promise((resolve) => {
                 setTimeout(() => {
                     const edit = this.state.edit

@@ -14,6 +14,9 @@
     <v-btn color="teal" dark @click="onSaveClick" :disabled="!value">
       SAVE
     </v-btn>
+    <div>
+      {{ editComputed }}
+    </div>
 
     <!-- *** кнопки автоматического добавления (через ссылку) *** -->
     <!-- <div>
@@ -58,20 +61,19 @@ export default {
     getEdit() {
       return this.$store.getters.getEdit;
     },
-    editOptions() {
-      console.log("options");
-      return () => {
-        if (this.edit !== this.$store.getters.getEdit) {
-          this.edit = this.$store.getters.getEdit;
-          this.addEditToForm();
-        }
-        return;
-      };
+    editComputed() {
+      return this.addEditToForm();
     },
   },
   methods: {
-    ...mapMutations(["addDataToPaymentList"]),
+    ...mapMutations(["addDataToPaymentList", "deletePayment"]),
     ...mapActions(["fetchCategoryList", "editList"]),
+    addEditToForm() {
+      console.log("222");
+      this.value = this.$store.getters.getEdit.value;
+      this.category = this.$store.getters.getEdit.category;
+      this.date = this.$store.getters.getEdit.date;
+    },
     onSaveClick() {
       let data = {
         date: this.date || this.getCurrentDate,
@@ -81,7 +83,12 @@ export default {
       };
 
       this.addDataToPaymentList(data);
+      this.deletePayment(this.$store.getters.getEdit);
       this.$emit("close");
+      this.dataEmpty();
+    },
+    dataEmpty() {
+      console.log("empty");
       (this.value = ""),
         (this.category = ""),
         (this.addCategoryToList = ""),
@@ -97,20 +104,12 @@ export default {
         name: Name,
       });
     },
-    addEditToForm() {
-      console.log("editform", this.edit);
-      this.value = this.edit.value;
-      this.category = this.edit.category;
-      this.date = this.edit.date;
-    },
   },
   created() {
     this.fetchCategoryList();
     this.editList();
   },
   mounted() {
-    console.log("mounted");
-    this.editOptions();
     if (this.$route.name === "addPaymentFormUrl") {
       this.value = Number(this.$route.query?.value) || 0;
       this.category = this.$route?.params?.Category || "";

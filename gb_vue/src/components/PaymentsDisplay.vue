@@ -90,7 +90,6 @@ export default {
           text: "Редактировать",
           action: (item) => {
             console.log("edit", item);
-            this.deletePayment(item);
             this.editPayment(item);
             this.$emit("show");
           },
