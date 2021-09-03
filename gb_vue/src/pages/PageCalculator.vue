@@ -99,7 +99,7 @@ export default {
     operations: ["+", "-", "*", "/", "n", "//"],
     myNumbers: [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, "DEL"],
     logs: {},
-    checkedOn: "true",
+    checkedOn: false,
     radios: null,
   }),
   methods: {

@@ -17,19 +17,6 @@
     <div>
       {{ editComputed }}
     </div>
-
-    <!-- *** кнопки автоматического добавления (через ссылку) *** -->
-    <!-- <div>
-        <a href="/add/payment/Food?value=200">
-          <button>Food</button>
-        </a>
-        <a href="/add/payment/Transport?value=50">
-          <button>Transport</button>
-        </a>
-        <a href="/add/payment/Entertainment?value=2000">
-          <button>Entertainment</button>
-        </a>
-      </div> -->
   </v-card>
 </template>
 
@@ -47,6 +34,12 @@ export default {
       edit: "",
     };
   },
+  // props: {
+  //   emptyForm: {
+  //     type: Boolean,
+  //     default: null,
+  //   },
+  // },
   computed: {
     getCurrentDate() {
       const today = new Date();
@@ -88,7 +81,7 @@ export default {
       this.dataEmpty();
     },
     dataEmpty() {
-      console.log("empty");
+      console.log("emptyForm2");
       (this.value = ""),
         (this.category = ""),
         (this.addCategoryToList = ""),

@@ -6,7 +6,7 @@
         <br />
         <v-dialog v-model="dialog" width="500">
           <template v-slot:activator="{ on }">
-            <v-btn color="teal" dark v-on="on">
+            <v-btn color="teal" dark v-on="on" @click="clearPaymentForm">
               ADD NEW COST <v-icon>mdi-plus</v-icon>
             </v-btn>
           </template>
@@ -26,13 +26,6 @@
             v-model="pages"
             :length="Math.ceil(paymentsList.length / n)"
           >
-            <!-- *** Пагинация без Vuetify -->
-            <!-- <pagination
-                :page="pages"
-                :n="n"
-                :length="paymentsList.length"
-                @changePage="addChengePages"
-              /> -->
           </v-pagination>
         </div>
       </v-col>
@@ -44,14 +37,12 @@
 <script>
 import { mapMutations, mapGetters, mapActions } from "vuex";
 import AddPaymentForm from "../components/AddPaymentForm.vue";
-// import Pagination from "../components/Pagination.vue"; // *** Пагинация без Vuetify ***
 import PaymentsDisplay from "../components/PaymentsDisplay.vue";
 
 export default {
   name: "Dashboard",
   components: {
     PaymentsDisplay,
-    // Pagination,
     AddPaymentForm,
   },
   data() {
@@ -61,7 +52,6 @@ export default {
       n: 10,
       addPaymentCategory: "",
       addPaymentValue: 0,
-      // showPaymentForm: "",
       settings: {
         compName: "addPayment",
       },
@@ -69,39 +59,12 @@ export default {
   },
   methods: {
     ...mapMutations({
-      addDataToStore: "addDataToPaymentList",
+      // addDataToStore: "addDataToPaymentList",
+      clearPaymentForm: "editPayment",
     }),
     ...mapActions({
       fetchListData: "fetchData",
     }),
-    // *** Пагинация без Vuetify ***
-    // addChengePages(p) {
-    //   this.pages = p;
-    // },
-    // *** реализация модуля ***
-    // showPaymentFormFn() {
-    //   this.$modal.show("AddPaymentForm", { header: "Payment Form" });
-    // },
-
-    // fetchData() {
-    //   return [
-    //     {
-    //       date: "28.03.2020",
-    //       category: "Food",
-    //       value: 169,
-    //     },
-    //     {
-    //       date: "24.03.2020",
-    //       category: "Transport",
-    //       value: 360,
-    //     },
-    //     {
-    //       date: "24.03.2020",
-    //       category: "Food",
-    //       value: 532,
-    //     },
-    //   ];
-    // },
   },
   computed: {
     ...mapGetters({

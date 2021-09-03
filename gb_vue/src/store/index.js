@@ -11,11 +11,6 @@ export default new Vuex.Store({
     },
     mutations: {
         setPaymentListData(state, payload) {
-            // реактивность изменений 
-            // state.paymentsList[0] = payload
-            // state.paymentsList = [...state.paymentsList]
-
-            // Vue.set(state.paymentsList, 0, payload)
             state.paymentsList = [...payload, ...state.paymentsList]
         },
         deletePayment(state, payload) {
