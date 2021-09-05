@@ -29,7 +29,11 @@
           </v-pagination>
         </div>
       </v-col>
-      <v-col cols="4"> CHART </v-col>
+      <v-col cols="4">
+        <chart-doughnut :chart-data="datacollection" />
+        {{ this.$store.getters.getChart }}
+        {{ this.$store.getters.getValueToChart }}
+      </v-col>
     </v-row>
   </v-container>
 </template>
@@ -37,6 +41,7 @@
 <script>
 import { mapMutations, mapGetters, mapActions } from "vuex";
 import AddPaymentForm from "../components/AddPaymentForm.vue";
+import ChartDoughnut from "../components/ChartDoughnut.vue";
 import PaymentsDisplay from "../components/PaymentsDisplay.vue";
 
 export default {
@@ -44,9 +49,12 @@ export default {
   components: {
     PaymentsDisplay,
     AddPaymentForm,
+    ChartDoughnut,
   },
   data() {
     return {
+      chartOn: false,
+      datacollection: {},
       dialog: false,
       pages: 1,
       n: 10,
@@ -59,12 +67,33 @@ export default {
   },
   methods: {
     ...mapMutations({
-      // addDataToStore: "addDataToPaymentList",
       clearPaymentForm: "editPayment",
     }),
     ...mapActions({
       fetchListData: "fetchData",
     }),
+    fillData() {
+      console.log(this.$store.getters.getValueToChart);
+      console.log("chart");
+      this.datacollection = {
+        labels: this.$store.getters.getChart,
+        datasets: [
+          {
+            label: "My First Dataset",
+            data: this.$store.getters.getValueToChart,
+            backgroundColor: [
+              "rgb(0, 0, 139)",
+              "rgb(54, 162, 235)",
+              "rgb(255, 205, 86)",
+              "rgb(0, 128, 0)",
+              "rgb(255, 0, 0)",
+              "rgb(255, 99, 132)",
+            ],
+            hoverOffset: 4,
+          },
+        ],
+      };
+    },
   },
   computed: {
     ...mapGetters({
@@ -88,8 +117,14 @@ export default {
     }
   },
   mounted() {
+    console.log("m");
+    this.fillData();
     this.addPaymentValue = this.$route.query.value;
     this.addPaymentCategory = this.$route.params.Category;
+  },
+  beforeUpdate() {
+    console.log("u");
+    this.fillData();
   },
 };
 </script>

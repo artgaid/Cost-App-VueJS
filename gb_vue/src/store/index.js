@@ -8,6 +8,7 @@ export default new Vuex.Store({
         paymentsList: [],
         categories: [],
         edit: "",
+        chartValue: "",
     },
     mutations: {
         setPaymentListData(state, payload) {
@@ -32,7 +33,7 @@ export default new Vuex.Store({
         },
         addCategoryToList(state, payload) {
             state.categories.push(payload)
-        }
+        },
     },
     getters: {
         getPaymentsList: state => state.paymentsList,
@@ -40,8 +41,20 @@ export default new Vuex.Store({
             return state.paymentsList.reduce((res, cur) => res + cur.value, 0)
         },
         getCategories: state => state.categories,
-        getEdit: state => state.edit
-
+        getEdit: state => state.edit,
+        getChart: state => {
+            return [...new Set(state.paymentsList.map((c) => c.category))]
+        },
+        getValueToChart: state => {
+            return [...new Set(state.paymentsList.map(c => {
+                return state.paymentsList.reduce((res, cur) => {
+                    if (cur.category === c.category) {
+                        res += +cur.value
+                    }
+                    return res;
+                }, 0)
+            }))]
+        },
     },
     actions: {
         editList({ commit }) {
