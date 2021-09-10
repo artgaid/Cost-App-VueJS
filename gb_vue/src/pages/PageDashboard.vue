@@ -31,8 +31,8 @@
       </v-col>
       <v-col cols="4">
         <chart-doughnut :chart-data="datacollection" />
-        {{ this.$store.getters.getChart }}
-        {{ this.$store.getters.getValueToChart }}
+        <!-- {{ this.$store.getters.getChart }}
+        {{ this.$store.getters.getValueToChart }} -->
       </v-col>
     </v-row>
   </v-container>
